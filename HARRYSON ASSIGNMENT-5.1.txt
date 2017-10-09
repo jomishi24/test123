@@ -1,0 +1,398 @@
+Question:1:
+
+Ans:SELECT date(((PERIOD_ADD(EXTRACT(YEAR_MONTH FROM CURDATE()),-3)*100)+1));
++-------------------------------------------------------------------+
+| date(((PERIOD_ADD(EXTRACT(YEAR_MONTH FROM CURDATE()),-3)*100)+1)) |
++-------------------------------------------------------------------+
+| 2017-06-01                                                        |
++-------------------------------------------------------------------+
+1 row in set (0.08 sec)
+
+Question:2:
+
+Ans:
+SELECT (SUBDATE(ADDDATE(CURDATE(),INTERVAL 1 MONTH),INTERVAL DAYOFMONTH(CURDATE())DAY)) AS LastDayOfTheMonth;
++-------------------+
+| LastDayOfTheMonth |
++-------------------+
+| 2017-09-30        |
++-------------------+
+
+Qustion-3:
+
+Ans:
+Select DISTINCT(STR_TO_DATE(CONCAT(YEARWEEK(HIRE_DATE),'1'),'%x%v%w')) from employee;
++---------------------------------------------------------+
+| (STR_TO_DATE(CONCAT(YEARWEEK(HIRE_DATE),'1'),'%x%v%w')) |
++---------------------------------------------------------+
+| 1987-06-08                                              |
+| 1987-06-15                                              |
+| 1987-06-22                                              |
+| 1987-06-29                                              |
+| 1987-07-06                                              |
+| 1987-07-13                                              |
+| 1987-07-20                                              |
+| 1987-07-27                                              |
++---------------------------------------------------------+
+
+8 rows in set (0.00 sec)
+
+Qustion-4:
+
+Ans:
+ SELECT MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1);
++------------------------------------------+
+| MAKEDATE(EXTRACT(YEAR FROM CURDATE()),1) |
++------------------------------------------+
+| 2017-01-01                               |
++------------------------------------------+
+1 row in set (0.03 sec)
+
+Question-5:
+
+Ans:
+mysql> SELECT YEAR(CURRENT_TIMESTAMP) - YEAR("1967-06-08") - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT("1967-06-08", 5)) as age;
++------+
+| age  |
++------+
+|   50 |
++------+
+1 row in set (0.02 sec)
+
+Qustion:6:
+
+Ans:
+SELECT DATE_FORMAT(CURDATE(),'%M %e, %Y') AS 'Current_date';
++-------------------+
+| Current_date      |
++-------------------+
+| September 3, 2017 |
++-------------------+
+1 row in set (0.03 sec)
+
+Qustion:7:
+
+Ans:
+mysql> SELECT FROM_DAYS(730677);
++-------------------+
+| FROM_DAYS(730677) |
++-------------------+
+| 2000-07-11        |
++-------------------+
+1 row in set (0.00 sec)
+
+Qustion 8: 
+
+Ans:
+
+mysql> Select FIRST_NAME, LAST_NAME from employee where DATE_FORMAT(HIRE_DATE,'%M') ='JUNE' ;
+
++-------------+-----------+
+| FIRST_NAME  | LAST_NAME |
++-------------+-----------+
+| Steven      | King      |
+| Neena       | Kochhar   |
+| Lex         | De Haan   |
+| Alexander   | Hunold    |
+| Bruce       | Ernst     |
+| David       | Austin    |
+| Valli       | Pataballa |
+| Diana       | Lorentz   |
+| Nancy       | Greenberg |
+| John        | Chen      |
+| Ismael      | Sciarra   |
+| Jose Manuel | Urman     |
+| Luis        | Popp      |
++-------------+-----------+
+13 rows in set (0.00 sec)
+
+qustion 9:
+
+ANS:
+mysql> Select DATE_FORMAT(HIRE_DATE,'%Y') from employee GROUP BY DATE_FORMAT(HIRE_DATE,'%Y') HAVING COUNT(EMPLOYEE_ID)>10;
+
++-----------------------------+
+| DATE_FORMAT(HIRE_DATE,'%Y') |
++-----------------------------+
+| 1987                        |
++-----------------------------+
+1 row in set (0.09 sec)
+
+qustion:10:
+ANS:
+
+select DEPARTMENT_ID,concat(FIRST_NAME,LAST_NAME) AS "MANAGER NAME",SALARY from employee where DATEDIFF(NOW(),HIRE_DATE)>5 group by MANAGER_ID;
+
++---------------+-----------------+--------+
+| DEPARTMENT_ID | MANAGER NAME    | SALARY |
++---------------+-----------------+--------+
+|            90 | StevenKing      |  24000 |
+|           100 | NancyGreenberg  |  12000 |
+|            60 | AlexanderHunold |   9000 |
+|            60 | BruceErnst      |   6000 |
+|           100 | JohnChen        |   8200 |
+|            30 | AlexanderKhoo   |   3100 |
+|            50 | JuliaNayer      |   3200 |
+|            50 | LauraBissot     |   3300 |
+|            50 | JasonMallin     |   3300 |
+|            50 | RenskeLadwig    |   3600 |
+|            50 | TrennaRajs      |   3500 |
+|            80 | PeterTucker     |  10000 |
++---------------+-----------------+--------+
+
+12 rows in set (0.00 sec)
+
+Qustion:11:
+Ans:  
+
+Select EMPLOYEE_ID, LAST_NAME, ADDDATE(HIRE_DATE,30)  as "DATE OF FIRST SALARY" from employee;
+
++-------------+-------------+----------------------+
+| EMPLOYEE_ID | LAST_NAME   | DATE OF FIRST SALARY |
++-------------+-------------+----------------------+
+|         100 | King        | 1987-07-17           |
+|         101 | Kochhar     | 1987-07-18           |
+|         102 | De Haan     | 1987-07-19           |
+|         103 | Hunold      | 1987-07-20           |
+|         104 | Ernst       | 1987-07-21           |
+|         105 | Austin      | 1987-07-22           |
+|         106 | Pataballa   | 1987-07-23           |
+|         107 | Lorentz     | 1987-07-24           |
+|         108 | Greenberg   | 1987-07-25           |
+|         110 | Chen        | 1987-07-27           |
+|         111 | Sciarra     | 1987-07-28           |
+|         112 | Urman       | 1987-07-29           |
+|         113 | Popp        | 1987-07-30           |
+|         114 | Raphaely    | 1987-07-31           |
+|         115 | Khoo        | 1987-08-01           |
+|         116 | Baida       | 1987-08-02           |
+|         117 | Tobias      | 1987-08-03           |
+|         118 | Himuro      | 1987-08-04           |
+|         119 | Colmenares  | 1987-08-05           |
+|         120 | Weiss       | 1987-08-06           |
+|         121 | Fripp       | 1987-08-07           |
+|         122 | Kaufling    | 1987-08-08           |
+|         123 | Vollman     | 1987-08-09           |
+|         124 | Mourgos     | 1987-08-10           |
+|         125 | Nayer       | 1987-08-11           |
+|         126 | Mikkilineni | 1987-08-12           |
+|         127 | Landry      | 1987-08-13           |
+|         128 | Markle      | 1987-08-14           |
+|         129 | Bissot      | 1987-08-15           |
+|         130 | Atkinson    | 1987-08-16           |
+|         131 | Marlow      | 1987-08-17           |
+|         132 | Olson       | 1987-08-18           |
+|         133 | Mallin      | 1987-08-19           |
+|         134 | Rogers      | 1987-08-20           |
+|         135 | Gee         | 1987-08-21           |
+|         136 | Philtanker  | 1987-08-22           |
+|         137 | Ladwig      | 1987-08-23           |
+|         138 | Stiles      | 1987-08-24           |
+|         139 | Seo         | 1987-08-25           |
+|         140 | Patel       | 1987-08-26           |
+|         141 | Rajs        | 1987-08-27           |
+|         142 | Davies      | 1987-08-28           |
+|         143 | Matos       | 1987-08-29           |
+|         144 | Vargas      | 1987-08-30           |
+|         145 | Russell     | 1987-08-31           |
+|         146 | Partners    | 1987-09-01           |
+|         147 | Errazuriz   | 1987-09-02           |
+|         148 | Cambrault   | 1987-09-03           |
+|         149 | Zlotkey     | 1987-09-04           |
+|         150 | Tucker      | 1987-09-05           |
+|         151 | Bernstein   | 1987-09-06           |
++-------------+-------------+----------------------+
+51 rows in set (0.04 sec)
+
+Qustion 12:
+Ans:
+
+mysql> Select FIRST_NAME,HIRE_DATE, DATEDIFF(NOW(),HIRE_DATE)/365 as "YEARS OF EXPERIENCE" from employee;
+
++-------------+------------+---------------------+
+| FIRST_NAME  | HIRE_DATE  | YEARS OF EXPERIENCE |
++-------------+------------+---------------------+
+| Steven      | 1987-06-17 |             30.2329 |
+| Neena       | 1987-06-18 |             30.2301 |
+| Lex         | 1987-06-19 |             30.2274 |
+| Alexander   | 1987-06-20 |             30.2247 |
+| Bruce       | 1987-06-21 |             30.2219 |
+| David       | 1987-06-22 |             30.2192 |
+| Valli       | 1987-06-23 |             30.2164 |
+| Diana       | 1987-06-24 |             30.2137 |
+| Nancy       | 1987-06-25 |             30.2110 |
+| John        | 1987-06-27 |             30.2055 |
+| Ismael      | 1987-06-28 |             30.2027 |
+| Jose Manuel | 1987-06-29 |             30.2000 |
+| Luis        | 1987-06-30 |             30.1973 |
+| Den         | 1987-07-01 |             30.1945 |
+| Alexander   | 1987-07-02 |             30.1918 |
+| Shelli      | 1987-07-03 |             30.1890 |
+| Sigal       | 1987-07-04 |             30.1863 |
+| Guy         | 1987-07-05 |             30.1836 |
+| Karen       | 1987-07-06 |             30.1808 |
+| Matthew     | 1987-07-07 |             30.1781 |
+| Adam        | 1987-07-08 |             30.1753 |
+| Payam       | 1987-07-09 |             30.1726 |
+| Shanta      | 1987-07-10 |             30.1699 |
+| Kevin       | 1987-07-11 |             30.1671 |
+| Julia       | 1987-07-12 |             30.1644 |
+| Irene       | 1987-07-13 |             30.1616 |
+| James       | 1987-07-14 |             30.1589 |
+| Steven      | 1987-07-15 |             30.1562 |
+| Laura       | 1987-07-16 |             30.1534 |
+| Mozhe       | 1987-07-17 |             30.1507 |
+| James       | 1987-07-18 |             30.1479 |
+| TJ          | 1987-07-19 |             30.1452 |
+| Jason       | 1987-07-20 |             30.1425 |
+| Michael     | 1987-07-21 |             30.1397 |
+| Ki          | 1987-07-22 |             30.1370 |
+| Hazel       | 1987-07-23 |             30.1342 |
+| Renske      | 1987-07-24 |             30.1315 |
+| Stephen     | 1987-07-25 |             30.1288 |
+| John        | 1987-07-26 |             30.1260 |
+| Joshua      | 1987-07-27 |             30.1233 |
+| Trenna      | 1987-07-28 |             30.1205 |
+| Curtis      | 1987-07-29 |             30.1178 |
+| Randall     | 1987-07-30 |             30.1151 |
+| Peter       | 1987-07-31 |             30.1123 |
+| John        | 1987-08-01 |             30.1096 |
+| Karen       | 1987-08-02 |             30.1068 |
+| Alberto     | 1987-08-03 |             30.1041 |
+| Gerald      | 1987-08-04 |             30.1014 |
+| Eleni       | 1987-08-05 |             30.0986 |
+| Peter       | 1987-08-06 |             30.0959 |
+| David       | 1987-08-07 |             30.0932 |
++-------------+------------+---------------------+
+
+51 rows in set (0.05 sec)
+
+Qustion:13:
+Ans:
+Select DISTINCT JOB_ID FROM EMPLOYEE;
++------------+
+| JOB_ID     |
++------------+
+| AD_PRESS   |
+| AD_VP      |
+| IT_PROG    |
+| FI_MGR     |
+| FI_ACCOUNT |
+| PU_MAN     |
+| PU_CLERK   |
+| ST_MAN     |
+| ST_CLERK   |
+| SA_MAN     |
+| SA_REP     |
++------------+
+11 rows in set (0.00 sec)
+
+Qus:14:
+Ans:
+
+mysql> Select MAX(SALARY) from employee where JOB_ID='IT_PROG';
++-------------+
+| MAX(SALARY) |
++-------------+
+|        9000 |
++-------------+
+1 row in set (0.00 sec)
+
+Qus:15:
+Ans:
+mysql> Select Count(EMPLOYEE_ID) AS "NO. OF EMPLOYEE", AVG(SALARY) from employee where DEPARTMENT_ID=90 ;
++-----------------+-------------+
+| NO. OF EMPLOYEE | AVG(SALARY) |
++-----------------+-------------+
+|               3 |  19333.3333 |
++-----------------+-------------+
+1 row in set (0.00 sec)
+
+qustion-16:
+Ans:
+
+mysql> select JOB_ID,count(EMPLOYEE_ID) AS "NO. OF EMPLOYEE" from employee group by JOB_ID;
++------------+-----------------+
+| JOB_ID     | NO. OF EMPLOYEE |
++------------+-----------------+
+| AD_PRESS   |               1 |
+| AD_VP      |               2 |
+| FI_ACCOUNT |               4 |
+| FI_MGR     |               1 |
+| IT_PROG    |               5 |
+| PU_CLERK   |               5 |
+| PU_MAN     |               1 |
+| SA_MAN     |               5 |
+| SA_REP     |               2 |
+| ST_CLERK   |              20 |
+| ST_MAN     |               5 |
++------------+-----------------+
+
+qustion-17:
+Ans:
+
+mysql> select MANAGER_ID, SALARY from employee group by MANAGER_ID HAVING MIN(SALARY);
++------------+--------+
+| MANAGER_ID | SALARY |
++------------+--------+
+|        100 |  24000 |
+|        101 |  12000 |
+|        102 |   9000 |
+|        103 |   6000 |
+|        108 |   8200 |
+|        114 |   3100 |
+|        120 |   3200 |
+|        121 |   3300 |
+|        122 |   3300 |
+|        123 |   3600 |
+|        124 |   3500 |
+|        145 |  10000 |
++------------+--------+
+12 rows in set (0.00 sec)
+
+Qustion -18:
+Ans: mysql> Select JOB_ID,AVG(SALARY) from employee where JOB_ID<>'IT_PROG' group by JOB_ID;
++------------+-------------+
+| JOB_ID     | AVG(SALARY) |
++------------+-------------+
+| AD_PRESS   |  24000.0000 |
+| AD_VP      |  17000.0000 |
+| FI_ACCOUNT |   7650.0000 |
+| FI_MGR     |  12000.0000 |
+| PU_CLERK   |   2780.0000 |
+| PU_MAN     |  11000.0000 |
+| SA_MAN     |  12200.0000 |
+| SA_REP     |   9750.0000 |
+| ST_CLERK   |   2785.0000 |
+| ST_MAN     |   7280.0000 |
++------------+-------------+
+10 rows in set (0.03 sec)
+
+Qustion 19:
+Ans;
+
+mysql> Select JOB_ID, MAX(SALARY) from employee GROUP BY JOB_ID HAVING MAX(SALARY)>=4000;
++------------+-------------+
+| JOB_ID     | MAX(SALARY) |
++------------+-------------+
+| AD_PRESS   |       24000 |
+| AD_VP      |       17000 |
+| FI_ACCOUNT |        8200 |
+| FI_MGR     |       12000 |
+| IT_PROG    |        9000 |
+| PU_MAN     |       11000 |
+| SA_MAN     |       14000 |
+| SA_REP     |       10000 |
+| ST_MAN     |        8200 |
++------------+-------------+
+9 rows in set (0.00 sec)
+
+Qustion 20:
+Ans:
+mysql> Select avg(SALARY) from employee group by DEPARTMENT_ID HAVING COUNT(*)>10;
++-------------+
+| avg(SALARY) |
++-------------+
+|   3684.0000 |
++-------------+
+1 row in set (0.01 sec)
